@@ -28,6 +28,6 @@ bot.on('message', function (msg) {
     });
   } else {
     var chatId = msg.chat.id;
-    bot.sendMessage(chatId, "Command not found");
+    bot.sendMessage(chatId, "Command not found: " + msg);
   }
 });
