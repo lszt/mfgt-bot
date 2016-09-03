@@ -3,8 +3,8 @@ var TelegramBot = require('node-telegram-bot-api');
 
 var token = process.env.TELEGRAM_BOT_TOKEN;
 // See https://developers.openshift.com/en/node-js-environment-variables.html
-var port = process.env.OPENSHIFT_NODEJS_PORT;
-var host = process.env.OPENSHIFT_NODEJS_IP;
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var host = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 var domain = process.env.OPENSHIFT_APP_DNS;
 
 var request = require('request');
