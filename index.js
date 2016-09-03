@@ -11,6 +11,8 @@ var request = require('request');
 var adstatusurl = 'https://mfgt-api.appspot.com/api/v1/aerodromestatus';
 var resurl = 'https://mfgt-api.appspot.com/api/v1/reservations';
 
+console.log("domain: " + domain);
+
 var bot = new TelegramBot(token, {webHook: {port: port, host: host}});
 // OpenShift enroutes :443 request to OPENSHIFT_NODEJS_PORT
 bot.setWebHook(domain+':443/bot'+token);
