@@ -19,8 +19,7 @@ bot.setWebHook(domain+':443/bot'+token);
 
 
 bot.on('message', function (msg) {
-  var msg = msg.trim();
-  if (msg == 'status') {
+  if (msg.text == 'status') {
     request({'url': adstatusurl}, function(error, response, body) {
       var status = JSON.parse(body);
       bot.sendMessage(chatId, status.status);
