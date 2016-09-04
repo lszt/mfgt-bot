@@ -23,30 +23,38 @@ if (domain) {
   bot.setWebHook(domain+':443/bot'+token);
 }
 
+var help = "Supported commands:\n/status - return aerodrome status\n/webcam - show current webcam images"
+
 bot.on('message', function (msg) {
   var chatId = msg.chat.id;
-console.log(msg.text);
-  if (msg.text == '/status') {
+  var cmd = msg.text.toLowerCase().trim();
+  cmd = cmd.charAt(0) == '/'? cmd.substring(1) : cmd;
+  console.log(msg.text + ':' + cmd);
+  if (cmd == 'status') {
+    bot.sendChatAction(chatId, 'typing');
     request({'url': adstatusurl}, function(error, response, body) {
       var status = JSON.parse(body);
       var msg = striptags(status.message);
       bot.sendMessage(chatId, msg, {'parse_mode': 'HTML'});
       console.log(body);
     });
-  } else if (msg.text == '/webcam') {
+  } else if (cmd == 'webcam') {
+    bot.sendChatAction(chatId, 'upload_photo');
     request({'url': adstatusurl}, function(error, response, body) {
       var status = JSON.parse(body);
       console.log(body);
       request({'url': status.webcam.cams.east.high, 'encoding': null}, function(error, response, east) {
+        bot.sendPhoto(chatId, east);
         request({'url': status.webcam.cams.west.high, 'encoding': null}, function(error, response, west) {
-          bot.sendPhoto(chatId, east);
           bot.sendPhoto(chatId, west);
         });
       });
     });
-  } else if (msg.text == '/start') {
+  } else if (cmd == 'start') {
     bot.sendMessage(chatId, "Welcome to the LSZT bot");
+  } else if (cmd == 'help') {
+    bot.sendMessage(chatId, help);
   } else {
-    bot.sendMessage(chatId, "Command not found: " + msg.text);
+    bot.sendMessage(chatId, "Command not recognized." + help);
   }
 });
