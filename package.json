@@ -10,7 +10,9 @@
   "author": "Philipp Hug <philipp@hug.cx>",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^2.0.0",
     "node-telegram-bot-api": "^0.23.3",
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "striptags": "^2.1.1"
   }
 }
