@@ -11,7 +11,6 @@ var FirebaseListener = function (options, cb) {
     locale: "de",
   };
   Object.assign(this.options, options);
-  console.log(this.options);
   this.cb = cb;
   this.notify();
 };
@@ -25,9 +24,8 @@ FirebaseListener.prototype.notifyMovement = function (val, id) {
 
 FirebaseListener.prototype.notifyOnMovement = function (ref, arg) {
   var self = this;
-  console.log("init");
   ref.once("value", function (snap) {
-    console.log("vali");
+    console.log("conected");
     var keys = Object.keys(snap.val() || {});
     var lastIdInSnapshot = keys[keys.length - 1];
     ref.orderByKey().startAt(lastIdInSnapshot).on("child_added", function (valsnap) {
