@@ -5,14 +5,22 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "jshint *.js"
   },
   "author": "Philipp Hug <philipp@hug.cx>",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^2.0.0",
+    "firebase": "^3.4.1",
+    "moment": "^2.15.1",
+    "moment-timezone": "^0.5.5",
     "node-telegram-bot-api": "^0.23.3",
     "request": "^2.74.0",
+    "strftime": "^0.9.2",
     "striptags": "^2.1.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.3"
   }
 }
