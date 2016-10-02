@@ -11,6 +11,11 @@ var FirebaseListener = function (options, cb) {
     locale: "de",
   };
   Object.assign(this.options, options);
+
+  if (options.firebaseb64key) {
+    var buf = new Buffer(options.firebaseb64key, 'base64');
+    this.options.firebase.serviceAccount.privateKey = buf.toString('ascii');
+  }
   this.cb = cb;
   this.notify();
   console.log(this.options);

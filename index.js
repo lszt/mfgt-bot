@@ -110,4 +110,5 @@ new Fbnotify({
     },
     databaseURL: process.env.FIREBASE_DATABASE_URL || "https://mfgt-flights.firebaseio.com",
   },
+  firebaseb64key: process.env.FIREBASE_B64KEY,
 }, sendChat);
