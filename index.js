@@ -34,6 +34,7 @@ if (domain) {
 var help = "Supported commands:\n/status - return aerodrome status\n/webcam - show current webcam images";
 
 bot.onText(/\/contact/, function (msg) {
+  console.log("contact");
   var chatId = msg.chat.id;
   bot.sendContact(chatId, {
     'phone_number': '+41523663333'
@@ -42,49 +43,55 @@ bot.onText(/\/contact/, function (msg) {
 
 bot.on('message', function (msg) {
   console.log(msg.chat);
+  console.log(msg.text);
+});
+
+bot.onText(/\/status/, function (msg) {
   var chatId = msg.chat.id;
-  var cmd = msg.text ? msg.text.toLowerCase().trim() : "";
-  cmd = cmd.charAt(0) == '/' ? cmd.substring(1) : cmd;
-  console.log(msg.text + ':' + cmd);
-  if (cmd == 'status') {
-    bot.sendChatAction(chatId, 'typing');
-    request({
-      'url': adstatusurl
-    }, function (error, response, body) {
-      var status = JSON.parse(body);
-      var msg = 'Status: ' + status.status + '\n' + striptags(status.message) + '\n- ' + strftime('%d.%m.%Y %H:%M ', new Date(status.last_update_date)) + ' ' + status.last_update_by;
-      bot.sendMessage(chatId, msg, {
-        'parse_mode': 'HTML'
-      });
-      console.log(body);
+  bot.sendChatAction(chatId, 'typing');
+  request({
+    'url': adstatusurl
+  }, function (error, response, body) {
+    var status = JSON.parse(body);
+    var msg = 'Status: ' + status.status + '\n' + striptags(status.message) + '\n- ' + strftime('%d.%m.%Y %H:%M ', new Date(status.last_update_date)) + ' ' + status.last_update_by;
+    bot.sendMessage(chatId, msg, {
+      'parse_mode': 'HTML'
     });
-  } else if (cmd == 'webcam') {
-    bot.sendChatAction(chatId, 'upload_photo');
+    console.log(body);
+  });
+});
+
+bot.onText(/\/webcam/, function (msg) {
+  var chatId = msg.chat.id;
+  bot.sendChatAction(chatId, 'upload_photo');
+  request({
+    'url': adstatusurl
+  }, function (error, response, body) {
+    var status = JSON.parse(body);
+    console.log(body);
     request({
-      'url': adstatusurl
-    }, function (error, response, body) {
-      var status = JSON.parse(body);
-      console.log(body);
+      'url': status.webcam.cams.east.high,
+      'encoding': null
+    }, function (error, response, east) {
+      bot.sendPhoto(chatId, east);
       request({
-        'url': status.webcam.cams.east.high,
+        'url': status.webcam.cams.west.high,
         'encoding': null
-      }, function (error, response, east) {
-        bot.sendPhoto(chatId, east);
-        request({
-          'url': status.webcam.cams.west.high,
-          'encoding': null
-        }, function (error, response, west) {
-          bot.sendPhoto(chatId, west);
-        });
+      }, function (error, response, west) {
+        bot.sendPhoto(chatId, west);
       });
     });
-  } else if (cmd == 'start') {
-    bot.sendMessage(chatId, "Welcome to the LSZT bot");
-  } else if (cmd == 'help') {
-    bot.sendMessage(chatId, help);
-  } else {
-    bot.sendMessage(chatId, "Command not recognized." + help);
-  }
+  });
+});
+
+bot.onText(/\/start/, function (msg) {
+  var chatId = msg.chat.id;
+  bot.sendMessage(chatId, "Welcome to the LSZT bot");
+});
+
+bot.onText(/\/help/, function (msg) {
+  var chatId = msg.chat.id;
+  bot.sendMessage(chatId, help);
 });
 
 
