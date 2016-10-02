@@ -13,6 +13,7 @@ var FirebaseListener = function (options, cb) {
   Object.assign(this.options, options);
   this.cb = cb;
   this.notify();
+  console.log(this.options);
 };
 
 FirebaseListener.prototype.notifyMovement = function (val, id) {
