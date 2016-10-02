@@ -9,6 +9,7 @@ var token = process.env.TELEGRAM_BOT_TOKEN;
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var host = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 var domain = process.env.OPENSHIFT_APP_DNS;
+var mfgt_chat_id = process.env.TELEGRAM_CHATID || -1001071250873;
 
 var adstatusurl = 'https://mfgt-api.appspot.com/api/v1/aerodromestatus';
 var resurl = 'https://mfgt-api.appspot.com/api/v1/reservations';
@@ -96,7 +97,6 @@ bot.onText(/\/help/, function (msg) {
 
 
 function sendChat(msg) {
-  var mfgt_chat_id = -1001071250873;
   bot.sendMessage(mfgt_chat_id, msg);
 }
 
