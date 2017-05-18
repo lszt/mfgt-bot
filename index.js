@@ -11,8 +11,8 @@ var host = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 var domain = process.env.OPENSHIFT_APP_DNS;
 var mfgt_chat_id = process.env.TELEGRAM_CHATID || -1001071250873;
 
-var adstatusurl = 'https://mfgt-api.appspot.com/api/v1/aerodromestatus';
-var resurl = 'https://mfgt-api.appspot.com/api/v1/reservations';
+var adstatusurl = 'https://api.mfgt.ch/api/v1/aerodromestatus';
+var resurl = 'https://api.mfgt.ch/api/v1/reservations';
 
 var polling_options = {
   polling: true
